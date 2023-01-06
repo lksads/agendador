@@ -41,6 +41,12 @@
                 case 'inserirPessoa':
                     include("paginas/pessoa/inserirPessoa.php");
                     break;
+                case 'editarPessoa':
+                    include("paginas/pessoa/editarPessoa.php");
+                    break;
+                case 'atualizarPessoa':
+                    include("paginas/pessoa/atualizarPessoa.php");
+                    break;
                 case 'tarefas':
                     include("paginas/tarefas/tarefas.php");
                     break;

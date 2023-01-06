@@ -13,6 +13,7 @@
             <th> ID</th>
             <th> Nome</th>
             <th> Perfil</th>
+            <th> Editar</th>
         </tr>
     </thead>
 
@@ -24,9 +25,10 @@
         while ($dados = mysqli_fetch_assoc($rs)){
         ?>
     <tr>
-        <td><?=$dados ["id_pessoa"]?>></td>
+        <td><?=$dados ["id_pessoa"]?></td>
         <td><?=$dados ["nome_pessoa"]?></td>
-        <td><?=$dados ["id_nivel_acesso"]?></td>
+        <td><?=$dados ["fk_nivel_acesso"]?></td>
+        <td><a href="index.php?menuop=editarPessoa&editarPessoa=<?=$dados["id_pessoa"] ?>">Editar</a></td>
     </tr>
 
     <?php

@@ -9,8 +9,8 @@
             <input type="text" name="nome_pessoa">
         </div>
         <div>
-            <label for="id_nivel_acesso">Perfil</label>
-            <input type="text" name="id_nivel_acesso">
+            <label for="fk_nivel_acesso">Perfil</label>
+            <input type="text" name="fk_nivel_acesso">
         </div>
 
         <div>

@@ -4,5 +4,5 @@
 define("SERVIDOR", "localhost");
 define("USUARIO", "root");
 define("SENHA", "");
-define("BANCO", "agendador");
+define("BANCO", "db_agendador");
 

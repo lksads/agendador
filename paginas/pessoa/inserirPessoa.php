@@ -3,14 +3,14 @@
 </header>
 <?php
 
-    $nomePessoa = mysqli_real_escape_string($conexao, $_POST["nome_pessoa"]);
-    $id_nivel_pessoa = mysqli_real_escape_string($conexao, $_POST["id_nivel_acesso"]);
+    $nome_pessoa = mysqli_real_escape_string($conexao, $_POST["nome_pessoa"]);
+    $fk_nivel_acesso = mysqli_real_escape_string($conexao, $_POST["fk_nivel_acesso"]);
     $sql = "INSERT INTO tb_pessoa (
                        nome_pessoa,
-                       id_nivel_acesso) 
+                       fk_nivel_acesso) 
                        VALUES(
-                              '{nome_pessoa}',
-                              '{$id_nivel_pessoa}'
+                              '{$nome_pessoa}',
+                              '{$fk_nivel_acesso}'
                        )";
     mysqli_query($conexao, $sql) or die("Erro ao consultar" . mysqli_error($conexao));
 
