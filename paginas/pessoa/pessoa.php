@@ -3,8 +3,7 @@
 </header>
 
 <div>
-    <a href="index.php?menuop=cadastro">Cadastro</a>
-
+    <a href="index.php?menuop=cadastro">Cadastro de Pessoa</a>
 </div>
 
 <table border="1">
@@ -12,8 +11,8 @@
         <tr>
             <th> ID</th>
             <th> Nome</th>
-            <th> Perfil</th>
             <th> Editar</th>
+            <th> Excluir</th>
         </tr>
     </thead>
 
@@ -27,16 +26,13 @@
     <tr>
         <td><?=$dados ["id_pessoa"]?></td>
         <td><?=$dados ["nome_pessoa"]?></td>
-        <td><?=$dados ["fk_nivel_acesso"]?></td>
-        <td><a href="index.php?menuop=editarPessoa&editarPessoa=<?=$dados["id_pessoa"] ?>">Editar</a></td>
+        <td><a href="index.php?menuop=editarPessoa&id_pessoa=<?=$dados["id_pessoa"] ?>">Editar</a></td>
+        <td><a href="index.php?menuop=excluirPessoa&excluirPessoa=<?=$dados["id_pessoa"] ?>">Excluir</a></td>
     </tr>
 
     <?php
         }
     ?>
-
-
-
 </tbody>
 
 </table>

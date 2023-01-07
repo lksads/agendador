@@ -1,28 +1,28 @@
 <?php
     include ("db/conexao.php");
-
 ?>
 
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Agendador</title>
-</head>
-<body>
-    <header>
-        <h1>Sistema Agendador</h1>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Agendador</title>
+    </head>
+    <body>
+        <header>
+            <h1>Sistema Agendador</h1>
 
-        <nav>
-            <a href="index.php?menuop=home">Home</a>|
-            <a href="index.php?menuop=pessoa">Cadastro de Pessoas</a>|
-            <a href="index.php?menuop=tarefas">Tarefas</a>|
-            <a href="index.php?menuop=eventos">Eventos</a>
-        </nav>
-    </header>
+            <nav>
+                <a href="index.php?menuop=home">Home</a>|
+                <a href="index.php?menuop=pessoa">Cadastro de Pessoas</a>|
+                <a href="index.php?menuop=tarefas">Tarefas</a>|
+                <a href="index.php?menuop=eventos">Eventos</a>
+                <a href="index.php?menuop=departamento">Departamento</a>
+            </nav>
+        </header>
     <main>
         <hr>
         <?php
@@ -44,6 +44,9 @@
                 case 'editarPessoa':
                     include("paginas/pessoa/editarPessoa.php");
                     break;
+                case 'excluirPessoa':
+                    include("paginas/pessoa/excluirPessoa.php");
+                    break;
                 case 'atualizarPessoa':
                     include("paginas/pessoa/atualizarPessoa.php");
                     break;
@@ -53,16 +56,16 @@
                 case 'eventos':
                     include("paginas/eventos/eventos.php");
                     break;
+                case 'departamento':
+                    include("paginas/departamento/departamento.php");
+                    break;
                 default:
                     include("paginas/home/home.php");
             }
-
         ?>
 
-
-
     </main>
-</body>
-</html>
+    </body>
+    </html>
 
 <?php

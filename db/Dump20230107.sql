@@ -24,19 +24,19 @@ DROP TABLE IF EXISTS `tb_agendamento`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_agendamento` (
   `id_agendamento` int(11) NOT NULL AUTO_INCREMENT,
-  `horario_inicio` datetime DEFAULT NULL,
-  `horario_fim` datetime DEFAULT NULL,
-  `fk_pessoa` int(11) DEFAULT NULL,
+  `dia_hora_inicio` datetime DEFAULT NULL,
+  `dia_hora_fim` datetime DEFAULT NULL,
   `fk_sala` int(11) DEFAULT NULL,
   `fk_departamento` int(11) DEFAULT NULL,
   `observacao` varchar(400) DEFAULT NULL,
   `recorrente` tinyint(1) DEFAULT NULL,
+  `fk_usuario` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_agendamento`),
   KEY `fk_sala_idx` (`fk_sala`),
   KEY `fk_departamento_idx` (`fk_departamento`),
-  KEY `fk_pessoa_idx` (`fk_pessoa`),
+  KEY `fk_tb_agendamento_tb_usuario1_idx` (`fk_usuario`),
   CONSTRAINT `departamento` FOREIGN KEY (`fk_departamento`) REFERENCES `tb_departamento` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `pessoa` FOREIGN KEY (`fk_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_agendamento_tb_usuario1` FOREIGN KEY (`fk_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `sala` FOREIGN KEY (`fk_sala`) REFERENCES `tb_sala` (`id_sala`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,7 +93,6 @@ CREATE TABLE `tb_nivel_acesso` (
 
 LOCK TABLES `tb_nivel_acesso` WRITE;
 /*!40000 ALTER TABLE `tb_nivel_acesso` DISABLE KEYS */;
-INSERT INTO `tb_nivel_acesso` VALUES (1,'amd');
 /*!40000 ALTER TABLE `tb_nivel_acesso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,11 +106,8 @@ DROP TABLE IF EXISTS `tb_pessoa`;
 CREATE TABLE `tb_pessoa` (
   `id_pessoa` int(11) NOT NULL AUTO_INCREMENT,
   `nome_pessoa` varchar(200) DEFAULT NULL,
-  `fk_nivel_acesso` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_pessoa`),
-  KEY `fk_nivel_acesso_idx` (`fk_nivel_acesso`),
-  CONSTRAINT `fk_nivel_acesso` FOREIGN KEY (`fk_nivel_acesso`) REFERENCES `tb_nivel_acesso` (`id_nivel_acesso`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id_pessoa`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +116,7 @@ CREATE TABLE `tb_pessoa` (
 
 LOCK TABLES `tb_pessoa` WRITE;
 /*!40000 ALTER TABLE `tb_pessoa` DISABLE KEYS */;
-INSERT INTO `tb_pessoa` VALUES (2,'borboleta',1),(3,'{nome_pessoa}',1),(4,'teste1',1);
+INSERT INTO `tb_pessoa` VALUES (6,'teste3');
 /*!40000 ALTER TABLE `tb_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,13 +155,11 @@ CREATE TABLE `tb_usuario` (
   `login` varchar(45) DEFAULT NULL,
   `fk_pessoa` int(11) DEFAULT NULL,
   `fk_nivel_acesso` int(11) DEFAULT NULL,
-  `fk_departamento` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `fk_pessoa_idx` (`fk_pessoa`),
-  KEY `fk_departamento_idx` (`fk_departamento`),
-  KEY `fk_nivel_acesso_idx` (`fk_nivel_acesso`),
-  CONSTRAINT `fk_departamento` FOREIGN KEY (`fk_departamento`) REFERENCES `tb_departamento` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pessoa` FOREIGN KEY (`fk_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_tb_usuario_tb_nivel_acesso1_idx` (`fk_nivel_acesso`),
+  CONSTRAINT `fk_pessoa` FOREIGN KEY (`fk_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_usuario_tb_nivel_acesso1` FOREIGN KEY (`fk_nivel_acesso`) REFERENCES `tb_nivel_acesso` (`id_nivel_acesso`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -187,4 +181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-06 17:38:13
+-- Dump completed on 2023-01-07 17:32:33

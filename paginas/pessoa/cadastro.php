@@ -8,10 +8,6 @@
             <label for="nome_pessoa">Nome</label>
             <input type="text" name="nome_pessoa">
         </div>
-        <div>
-            <label for="fk_nivel_acesso">Perfil</label>
-            <input type="text" name="fk_nivel_acesso">
-        </div>
 
         <div>
             <input type="submit" value="Salvar" name="btnSalvar">
