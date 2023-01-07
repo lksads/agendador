@@ -1,14 +1,14 @@
 <header>
-    <h3>Cadastro de Pessoa</h3>
+    <h3>Pessoa</h3>
 </header>
 
 <div>
-    <a href="index.php?menuop=cadastro">Cadastro de Pessoa</a>
+    <a class="btn btn-primary" href="index.php?menuop=cadastro">Cadastrar Pessoa</a>
 </div>
-
-<table border="1">
+<br>
+<table  class="table table-striped table-hover table-responsive " >
     <thead>
-        <tr>
+        <tr class="bg-info">
             <th> ID</th>
             <th> Nome</th>
             <th> Editar</th>
@@ -27,7 +27,7 @@
         <td><?=$dados ["id_pessoa"]?></td>
         <td><?=$dados ["nome_pessoa"]?></td>
         <td><a href="index.php?menuop=editarPessoa&id_pessoa=<?=$dados["id_pessoa"] ?>">Editar</a></td>
-        <td><a href="index.php?menuop=excluirPessoa&excluirPessoa=<?=$dados["id_pessoa"] ?>">Excluir</a></td>
+        <td><a href="index.php?menuop=excluirPessoa&id_pessoa=<?=$dados["id_pessoa"] ?>">Excluir</a></td>
     </tr>
 
     <?php

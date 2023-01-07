@@ -5,22 +5,56 @@
 <!doctype html>
     <html lang="en">
         <head>
-            <meta charset="UTF-8">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" >
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+           <meta charset="UTF-8">
             <meta name="viewport"
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Agendador</title>
     </head>
     <body>
+        <div class="container ">
         <header>
-            <h1>Sistema Agendador</h1>
+<!--            <h1>Sistema Agendador</h1>-->
 
-            <nav>
-                <a href="index.php?menuop=home">Home</a>|
-                <a href="index.php?menuop=pessoa">Cadastro de Pessoas</a>|
-                <a href="index.php?menuop=tarefas">Tarefas</a>|
-                <a href="index.php?menuop=eventos">Eventos</a>
-                <a href="index.php?menuop=departamento">Departamento</a>
+<!--             <nav class="navbar bg-dark " data-bs-theme="dark" >-->
+<!--                <a class="" href="index.php?menuop=home">Home</a>-->
+<!--                <a href="index.php?menuop=pessoa">Pessoas</a>-->
+<!--                <a href="index.php?menuop=tarefas">Tarefas</a>-->
+<!--                <a href="index.php?menuop=eventos">Eventos</a>-->
+<!--                <a href="index.php?menuop=departamento">Departamento</a>-->
+<!--            </nav>-->
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand">Artemis</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" class="" href="index.php?menuop=home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?menuop=pessoa">Pessoas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?menuop=agendamento">Agendamento</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?menuop=sala">Sala</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?menuop=departamento">Departamento</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?menuop=perfil">Perfil</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </header>
     <main>
@@ -28,43 +62,20 @@
         <?php
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"home";
 
-            switch($menuop) {
-                case 'home':
-                    include("paginas/home/home.php");
-                    break;
-                case 'pessoa':
-                    include("paginas/pessoa/pessoa.php");
-                    break;
-                case 'cadastro':
-                    include("paginas/pessoa/cadastro.php");
-                    break;
-                case 'inserirPessoa':
-                    include("paginas/pessoa/inserirPessoa.php");
-                    break;
-                case 'editarPessoa':
-                    include("paginas/pessoa/editarPessoa.php");
-                    break;
-                case 'excluirPessoa':
-                    include("paginas/pessoa/excluirPessoa.php");
-                    break;
-                case 'atualizarPessoa':
-                    include("paginas/pessoa/atualizarPessoa.php");
-                    break;
-                case 'tarefas':
-                    include("paginas/tarefas/tarefas.php");
-                    break;
-                case 'eventos':
-                    include("paginas/eventos/eventos.php");
-                    break;
-                case 'departamento':
-                    include("paginas/departamento/departamento.php");
-                    break;
-                default:
-                    include("paginas/home/home.php");
+            $dado = substr($menuop, -6);
+            if($menuop == "cadastro" || $dado == "Pessoa"){
+                include("paginas/pessoa/".$menuop.".php");
+            }elseif ($dado != null){
+                include("paginas/".$menuop."/".$menuop.".php");
+            }else{
+                include("paginas/home/home.php");
             }
+
+
         ?>
 
-    </main>
+            </main>
+        </div>
     </body>
     </html>
 
