@@ -3,7 +3,7 @@
 </header>
 
 <div>
-    <form action="index.php?menuop=departamento" method="post">
+    <form action="index.php?menuop=inserirDepartamento" method="post">
         <div>
             <label for="nome_departamento">Departamento:</label>
             <input type="text" name="nome_departamento">

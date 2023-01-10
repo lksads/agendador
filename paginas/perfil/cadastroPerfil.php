@@ -5,15 +5,13 @@
 <div>
     <form action="index.php?menuop=inserirPerfil" method="post">
         <div>
-            <label for="id_nivel_acesso">Perfil</label>
-            <input type="text" name="fk_nivel_acesso">
+            <label for="nome_perfil">Perfil</label>
+            <input type="text" name="nome_perfil">
         </div>
 
         <div>
             <input type="submit" value="Salvar" name="btnSalvar">
         </div>
-
-
     </form>
 
 </div>

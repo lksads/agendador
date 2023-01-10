@@ -17,18 +17,9 @@
     <body>
         <div class="container ">
         <header>
-<!--            <h1>Sistema Agendador</h1>-->
-
-<!--             <nav class="navbar bg-dark " data-bs-theme="dark" >-->
-<!--                <a class="" href="index.php?menuop=home">Home</a>-->
-<!--                <a href="index.php?menuop=pessoa">Pessoas</a>-->
-<!--                <a href="index.php?menuop=tarefas">Tarefas</a>-->
-<!--                <a href="index.php?menuop=eventos">Eventos</a>-->
-<!--                <a href="index.php?menuop=departamento">Departamento</a>-->
-<!--            </nav>-->
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                    <a class="navbar-brand">Artemis</a>
+                    <a class="navbar-brand">Chronos</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -62,15 +53,26 @@
         <?php
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"home";
 
-            $dado = substr($menuop, -6);
-            if($menuop == "cadastro" || $dado == "Pessoa"){
+            //rever dados para melhoria
+
+            $pessoa= substr($menuop, -6);
+            $departamento = substr($menuop, -12);
+            $sala = substr($menuop, -4);
+            $perfil = substr($menuop, -6);
+
+            if($menuop == "cadastro" || $pessoa == "Pessoa"){
                 include("paginas/pessoa/".$menuop.".php");
-            }elseif ($dado != null){
+            }elseif ($menuop == "cadastroDepartamento" || $departamento == "Departamento") {
+                include("paginas/departamento/" . $menuop . ".php");
+            }elseif ($menuop == "cadastroSala" || $sala == "Sala"){
+                include("paginas/sala/".$menuop.".php");
+            }elseif ($menuop == "cadastroPerfil" || $perfil == "Perfil") {
+                include("paginas/perfil/" . $menuop . ".php");
+            }elseif ($pessoa != null){
                 include("paginas/".$menuop."/".$menuop.".php");
             }else{
                 include("paginas/home/home.php");
             }
-
 
         ?>
 

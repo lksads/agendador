@@ -3,7 +3,7 @@
 </header>
 
 <div>
-    <a class="btn btn-primary" href="index.php?menuop=cadastro">Cadastrar Pessoa</a>
+    <a class="btn btn-primary" href="index.php?menuop=cadastro">Cadastrar de Pessoa</a>
 </div>
 <br>
 <table  class="table table-striped table-hover table-responsive " >
