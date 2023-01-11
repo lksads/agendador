@@ -2,7 +2,7 @@
     <h3> Inserido com Sucesso</h3>
 </header>
 <?php
-
+/*
 $nome_departamento = mysqli_real_escape_string($conexao, $_POST["nome_departamento"]);
 
 $sql = "INSERT INTO tb_departamento(

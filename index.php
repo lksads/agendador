@@ -43,6 +43,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?menuop=perfil">Perfil</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?menuop=usuario">Usuário</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -59,6 +62,7 @@
             $departamento = substr($menuop, -12);
             $sala = substr($menuop, -4);
             $perfil = substr($menuop, -6);
+            $usuario = substr($menuop, -7);
 
             if($menuop == "cadastro" || $pessoa == "Pessoa"){
                 include("paginas/pessoa/".$menuop.".php");
@@ -68,6 +72,8 @@
                 include("paginas/sala/".$menuop.".php");
             }elseif ($menuop == "cadastroPerfil" || $perfil == "Perfil") {
                 include("paginas/perfil/" . $menuop . ".php");
+            }elseif ($menuop == "cadastroUsuario" || $usuario == "Usuário") {
+                include("paginas/usuario/" . $menuop . ".php");
             }elseif ($pessoa != null){
                 include("paginas/".$menuop."/".$menuop.".php");
             }else{
