@@ -1,17 +1,17 @@
 <?php
-$id_usuario = $_GET["id_usuario"];
+$id_agendamento = $_GET["id_agendamento"];
 
-$sql = "SELECT * FROM tb_usuario WHERE id_usuario = {$id_usuario}";
+$sql = "SELECT * FROM tb_agendamento WHERE id_agendamento = {$id_agendamento}";
 $rs = mysqli_query($conexao,$sql) or die ("Erro ao trazer os dados do bando" . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($rs);
 ?>
 
 <header>
-    <h3>Editar Usuário</h3>
+    <h3>Editar Agendamento</h3>
 </header>
 
 <div>
-    <form action="index.php?menuop=atualizarUsuario" method="post">
+    <form action="index.php?menuop=atualizarAgendamento" method="post">
         <div>
             <label for="id_usuario"></label>
             <input type="hidden" name="id_usuario" value="<?=$dados["id_usuario"] ?>">
