@@ -76,7 +76,7 @@
                 include("paginas/perfil/" . $menuop . ".php");
             }elseif ($menuop == "cadastroUsuario" || $usuario == "Usuario") {
                 include("paginas/usuario/" . $menuop . ".php");
-            }elseif ($menuop == "cadastroAgendamento" || $usuario == "Agendamento") {
+            }elseif ($menuop == "cadastroAgendamento" || $agendamento == "Agendamento") {
                 include("paginas/agendamento/" . $menuop . ".php");
             }elseif ($pessoa != null){
                 include("paginas/".$menuop."/".$menuop.".php");

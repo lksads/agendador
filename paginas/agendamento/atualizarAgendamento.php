@@ -1,20 +1,38 @@
 <header>
-    <h3> Usuário atualizado com Sucesso</h3>
+    <h3> Agendamento atualizado com Sucesso</h3>
 </header>
 <?php
-$id_usuario = mysqli_real_escape_string($conexao, $_POST["id_usuario"]);
-$nome_usuario = mysqli_real_escape_string($conexao, $_POST["nome_usuario"]);
-$fk_pessoa = mysqli_real_escape_string($conexao, $_POST["fk_pessoa"]);
-$fk_perfil = mysqli_real_escape_string($conexao, $_POST["fk_perfil"]);
 
-$sql = "UPDATE tb_usuario SET
-                         nome_usuario = '{$nome_usuario}',
-                         fk_pessoa = '{$fk_pessoa}',
-                         fk_perfil = '{$fk_perfil}'
+$id_agendamento = mysqli_real_escape_string($conexao, $_POST["id_agendamento"]);
+//juntando os dados para inserir no campo DATATIME
+$dia_inicio = mysqli_real_escape_string($conexao, $_POST["dia_inicio"]);
+$hora_inicio = mysqli_real_escape_string($conexao, $_POST["hora_inicio"]);
+$dia_hora_inicio = $dia_inicio ." ". $hora_inicio;
+//-----------------------------------------------------------------------------------------
+//juntando os dados para inserir no campo DATATIME
+$dia_fim = mysqli_real_escape_string($conexao, $_POST["dia_fim"]);
+$hora_fim = mysqli_real_escape_string($conexao, $_POST["hora_fim"]);
+$dia_hora_fim = $dia_fim ." ". $hora_fim;
+//-----------------------------------------------------------------------------------------
+$fk_sala = mysqli_real_escape_string($conexao, $_POST["fk_sala"]);
+$fk_departamento = mysqli_real_escape_string($conexao, $_POST["fk_departamento"]);
+$fk_usuario = mysqli_real_escape_string($conexao, $_POST["fk_usuario"]);
+
+$recorrente = isset($_POST["recorrente"]);
+$observacao = mysqli_real_escape_string($conexao, $_POST["observacao"]);
+
+$sql = "UPDATE tb_agendamento SET
+                         dia_hora_inicio = '{$dia_hora_inicio}',
+                         dia_hora_fim = '{$dia_hora_fim}',
+                         fk_sala = '{$fk_sala}',
+                         fk_departamento = '{$fk_departamento}',
+                         fk_usuario = '{$fk_usuario}',
+                         recorrente = '{$recorrente}',
+                         observacao = '{$observacao}'
                          
-                            WHERE id_usuario = '{$id_usuario}'
+                            WHERE id_agendamento = '{$id_agendamento}'
                          ";
 
-mysqli_query($conexao, $sql) or die("Erro ao atualizar o Usuário no banco de dados" . mysqli_error($conexao));
+mysqli_query($conexao, $sql) or die("Erro ao atualizar o Agendamento no banco de dados" . mysqli_error($conexao));
 
-echo "O Usuário foi atualizada com sucesso";
+echo "O Agendamento foi atualizada com sucesso";
