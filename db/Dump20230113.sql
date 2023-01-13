@@ -28,9 +28,9 @@ CREATE TABLE `tb_agendamento` (
   `dia_hora_fim` datetime DEFAULT NULL,
   `fk_sala` int(11) DEFAULT NULL,
   `fk_departamento` int(11) DEFAULT NULL,
-  `observacao` varchar(400) DEFAULT NULL,
-  `recorrente` tinyint(1) DEFAULT NULL,
   `fk_usuario` int(11) DEFAULT NULL,
+  `recorrente` tinyint(1) DEFAULT 0,
+  `observacao` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`id_agendamento`),
   KEY `fk_sala_idx` (`fk_sala`),
   KEY `fk_departamento_idx` (`fk_departamento`),
@@ -38,7 +38,7 @@ CREATE TABLE `tb_agendamento` (
   CONSTRAINT `departamento` FOREIGN KEY (`fk_departamento`) REFERENCES `tb_departamento` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tb_agendamento_tb_usuario1` FOREIGN KEY (`fk_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `sala` FOREIGN KEY (`fk_sala`) REFERENCES `tb_sala` (`id_sala`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,6 +47,7 @@ CREATE TABLE `tb_agendamento` (
 
 LOCK TABLES `tb_agendamento` WRITE;
 /*!40000 ALTER TABLE `tb_agendamento` DISABLE KEYS */;
+INSERT INTO `tb_agendamento` VALUES (15,'2023-01-13 15:00:00','2023-01-13 17:00:00',2,4,1,1,''),(17,'2023-01-13 15:16:00','2023-01-13 18:00:00',2,2,1,1,'Mostrar essa área'),(18,'2023-01-13 15:00:00','2023-01-13 17:00:00',1,4,1,0,'teste'),(19,'2023-01-13 11:00:00','2023-01-13 12:00:00',1,3,1,0,'123'),(21,'2023-01-13 12:00:00','2023-01-13 12:00:00',1,2,1,1,'123'),(22,'2023-01-12 11:00:00','2023-01-12 11:00:00',1,3,1,1,'10101'),(23,'2023-01-11 13:00:00','2023-01-11 00:00:00',1,3,1,1,'');
 /*!40000 ALTER TABLE `tb_agendamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +62,7 @@ CREATE TABLE `tb_departamento` (
   `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
   `nome_departamento` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_departamento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,30 +71,32 @@ CREATE TABLE `tb_departamento` (
 
 LOCK TABLES `tb_departamento` WRITE;
 /*!40000 ALTER TABLE `tb_departamento` DISABLE KEYS */;
+INSERT INTO `tb_departamento` VALUES (2,'daf'),(3,'dae'),(4,'dao'),(5,'DIJ'),(10,'lucas'),(11,'Marco');
 /*!40000 ALTER TABLE `tb_departamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_nivel_acesso`
+-- Table structure for table `tb_perfil`
 --
 
-DROP TABLE IF EXISTS `tb_nivel_acesso`;
+DROP TABLE IF EXISTS `tb_perfil`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_nivel_acesso` (
-  `id_nivel_acesso` int(11) NOT NULL AUTO_INCREMENT,
-  `descricao` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id_nivel_acesso`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `tb_perfil` (
+  `id_perfil` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_perfil` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id_perfil`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_nivel_acesso`
+-- Dumping data for table `tb_perfil`
 --
 
-LOCK TABLES `tb_nivel_acesso` WRITE;
-/*!40000 ALTER TABLE `tb_nivel_acesso` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_nivel_acesso` ENABLE KEYS */;
+LOCK TABLES `tb_perfil` WRITE;
+/*!40000 ALTER TABLE `tb_perfil` DISABLE KEYS */;
+INSERT INTO `tb_perfil` VALUES (2,'adm'),(4,'ATI1');
+/*!40000 ALTER TABLE `tb_perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -107,7 +110,7 @@ CREATE TABLE `tb_pessoa` (
   `id_pessoa` int(11) NOT NULL AUTO_INCREMENT,
   `nome_pessoa` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_pessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +119,7 @@ CREATE TABLE `tb_pessoa` (
 
 LOCK TABLES `tb_pessoa` WRITE;
 /*!40000 ALTER TABLE `tb_pessoa` DISABLE KEYS */;
-INSERT INTO `tb_pessoa` VALUES (6,'teste3');
+INSERT INTO `tb_pessoa` VALUES (6,'teste'),(10,'maria betanha'),(11,'enzo'),(12,'teste1'),(14,'beto');
 /*!40000 ALTER TABLE `tb_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +134,7 @@ CREATE TABLE `tb_sala` (
   `id_sala` int(11) NOT NULL AUTO_INCREMENT,
   `nome_sala` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_sala`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,6 +143,7 @@ CREATE TABLE `tb_sala` (
 
 LOCK TABLES `tb_sala` WRITE;
 /*!40000 ALTER TABLE `tb_sala` DISABLE KEYS */;
+INSERT INTO `tb_sala` VALUES (1,'209a'),(2,'02'),(3,'03'),(4,'4'),(5,'04');
 /*!40000 ALTER TABLE `tb_sala` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,15 +156,15 @@ DROP TABLE IF EXISTS `tb_usuario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_usuario` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(45) DEFAULT NULL,
+  `nome_usuario` varchar(45) DEFAULT NULL,
   `fk_pessoa` int(11) DEFAULT NULL,
-  `fk_nivel_acesso` int(11) DEFAULT NULL,
+  `fk_perfil` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `fk_pessoa_idx` (`fk_pessoa`),
-  KEY `fk_tb_usuario_tb_nivel_acesso1_idx` (`fk_nivel_acesso`),
-  CONSTRAINT `fk_pessoa` FOREIGN KEY (`fk_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tb_usuario_tb_nivel_acesso1` FOREIGN KEY (`fk_nivel_acesso`) REFERENCES `tb_nivel_acesso` (`id_nivel_acesso`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `fk_tb_usuario_tb_nivel_acesso1_idx` (`fk_perfil`),
+  CONSTRAINT `fk_perfil` FOREIGN KEY (`fk_perfil`) REFERENCES `tb_perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pessoa` FOREIGN KEY (`fk_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,6 +173,7 @@ CREATE TABLE `tb_usuario` (
 
 LOCK TABLES `tb_usuario` WRITE;
 /*!40000 ALTER TABLE `tb_usuario` DISABLE KEYS */;
+INSERT INTO `tb_usuario` VALUES (1,'lksads',10,4),(4,'teste dia',12,4);
 /*!40000 ALTER TABLE `tb_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -181,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-07 17:32:33
+-- Dump completed on 2023-01-13  8:24:25
