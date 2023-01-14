@@ -8,8 +8,10 @@
     <form action="index.php?menuop=agendamento" method="post">
         <div class="row g-3 align-items-center">
             <div class="col-auto">
-                <input type="date" name="pesquisa">
-                <input type="submit" value="Dia">
+                <input type="date" name="data">
+            </div>
+            <div class="col-auto">
+                <input type="time" name="hora">
             </div>
 
             <div class="col-auto">
@@ -55,6 +57,9 @@
                     ?>
                 </select>
             </div>
+            <div>
+                <input type="submit" value="pesquisar">
+            </div>
         </div>
     </form>
 
@@ -79,10 +84,27 @@
 
     <tbody>
     <?php
-    $per = (isset($_POST["pesquisa"]))?$_POST["pesquisa"] : "";
 
-    $sql = "SELECT * FROM tb_agendamento WHERE dia_hora_inicio LIKE '%$per%' OR dia_hora_fim LIKE '%$per%'";
+    $dia = (isset($conexao, $_POST["data"])) ? $_POST["data"]: "";
+    $hora = (isset($conexao, $_POST["hora"]))?$_POST["hora"]: "";
+    $dia_hora = $dia ." ". $hora;
+
+var_dump($dia);
+var_dump($hora);
+var_dump($dia_hora);
+
+    $sala = (isset($_POST["fk_sala"]))?$_POST["fk_sala"] : "";
+    $departamento = (isset($_POST["departamento"]))?$_POST["departamento"] : "";
+    $usuario = (isset($_POST["usuario"]))?$_POST["usuario"] : "";
+
+    //$sql = "SELECT * FROM tb_agendamento WHERE dia_hora_inicio LIKE '%$per%' OR dia_hora_fim LIKE '%$per%'";
+    $sql = "SELECT * FROM tb_agendamento 
+                WHERE  dia_hora_inicio LIKE '%$dia_hora%'
+                 OR dia_hora_fim LIKE '%$dia_hora%'
+                ORDER BY dia_hora_inicio ASC";
+
     $rs = mysqli_query($conexao,$sql) or die("Erro ao buscar agendamentos no banco de dados" . mysqli_error($conexao));
+
 
     while ($dados = mysqli_fetch_assoc($rs)){
         ?>
@@ -90,7 +112,7 @@
             <td><?=$dados ["id_agendamento"]?></td>
             <td><?=$dados ["dia_hora_inicio"]?></td>
             <td><?=$dados ["dia_hora_fim"]?></td>
-            <td><?=$dados ["fk_sala"]?></td>
+            <td><?=$dados ['fk_sala']?></td>
             <td><?=$dados ["fk_departamento"]?></td>
             <td><?=$dados ["fk_usuario"]?></td>
             <td><?=$dados ["recorrente"]?></td>

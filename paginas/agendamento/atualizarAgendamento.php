@@ -36,3 +36,7 @@ $sql = "UPDATE tb_agendamento SET
 mysqli_query($conexao, $sql) or die("Erro ao atualizar o Agendamento no banco de dados" . mysqli_error($conexao));
 
 echo "O Agendamento foi atualizada com sucesso";
+?>
+<div>
+    <a class="btn btn-primary" href="index.php?menuop=agendamento">Voltar</a>
+</div>
