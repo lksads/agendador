@@ -8,16 +8,18 @@
     <form action="index.php?menuop=agendamento" method="post">
         <div class="row g-3 align-items-center">
             <div class="col-auto">
-                <input type="date" name="data">
+                <label>Dia Inicio</label>
+                <input type="date" name="data_inicio" required>
             </div>
             <div class="col-auto">
-                <input type="time" name="hora">
+                <label>Dia Fim</label>
+                <input type="date" name="data_fim">
             </div>
 
             <div class="col-auto">
                 <label for="sala">Sala: </label>
                 <select name="fk_sala">
-                    <option>Selecionar</option>
+                    <option></option>
                     <?php
                     $res_sala = "SELECT * FROM tb_sala";
                     $resultado_sala = mysqli_query($conexao, $res_sala);
@@ -32,7 +34,7 @@
                 <label for="departamento">Departamento: </label>
                 <!--            <input type="text" name="fk_pessoa">-->
                 <select name="fk_departamento">
-                    <option>Selecionar</option>
+                    <option></option>
                     <?php
                     $res_departamento = "SELECT * FROM tb_departamento";
                     $resultado_departamento = mysqli_query($conexao, $res_departamento);
@@ -46,7 +48,7 @@
             <div class="col-auto">
                 <label for="usuario">Usuário: </label>
                 <select name="fk_usuario">
-                    <option>Selecionar</option>
+                    <option></option>
                     <?php
                     $res_usuario = "SELECT * FROM tb_usuario";
                     $resultado_usuario = mysqli_query($conexao, $res_usuario);
@@ -84,24 +86,75 @@
 
     <tbody>
     <?php
-
-    $dia = (isset($conexao, $_POST["data"])) ? $_POST["data"]: "";
-    $hora = (isset($conexao, $_POST["hora"]))?$_POST["hora"]: "";
-    $dia_hora = $dia ." ". $hora;
-
-var_dump($dia);
-var_dump($hora);
-var_dump($dia_hora);
+    $dia_inicio = (isset($conexao, $_POST["data_inicio"]))? $_POST["data_inicio"] : "" ;
+    $dia_fim = (isset($conexao, $_POST["data_fim"]))? $_POST["data_fim"]: "";
 
     $sala = (isset($_POST["fk_sala"]))?$_POST["fk_sala"] : "";
-    $departamento = (isset($_POST["departamento"]))?$_POST["departamento"] : "";
-    $usuario = (isset($_POST["usuario"]))?$_POST["usuario"] : "";
+    $departamento = (isset($_POST["fk_departamento"]))?$_POST["fk_departamento"] : "";
+    $usuario = (isset($_POST["fk_usuario"]))?$_POST["fk_usuario"] : "";
 
-    //$sql = "SELECT * FROM tb_agendamento WHERE dia_hora_inicio LIKE '%$per%' OR dia_hora_fim LIKE '%$per%'";
-    $sql = "SELECT * FROM tb_agendamento 
-                WHERE  dia_hora_inicio LIKE '%$dia_hora%'
-                 OR dia_hora_fim LIKE '%$dia_hora%'
-                ORDER BY dia_hora_inicio ASC";
+    $ordenar = "ORDER BY dia_hora_inicio ASC";
+    $tbAgendamento = "SELECT * FROM tb_agendamento tag
+                INNER JOIN tb_sala sala ON (sala.id_sala = tag.fk_sala) 
+                INNER JOIN tb_departamento dep ON (dep.id_departamento = tag.fk_departamento)
+                INNER JOIN tb_usuario usu ON (usu.id_usuario = tag.fk_usuario)";
+
+    if($dia_fim == ""){
+        $inicio = $dia_inicio . " 00:00:00";
+        $select = "$tbAgendamento
+                WHERE tag.dia_hora_inicio >= '$inicio'";
+
+    }else{
+        $inicio = $dia_inicio . " 00:00:00";
+        $fim = $dia_fim . " 23:59:59";
+        $select = "$tbAgendamento
+                WHERE tag.dia_hora_inicio >= '$inicio'
+				AND tag.dia_hora_fim <= '$fim'";
+    }
+
+    $selectCompleta = "$select
+                        WHERE tag.fk_sala = $sala 
+                        AND tag.fk_departamento = $departamento 
+                        AND tag.fk_usuario = $usuario";
+
+    if($sala != null){
+        if($departamento != null && $usuario == null){
+            $sql = "$select
+                AND tag.fk_sala = $sala
+                AND dep.id_departamento = $departamento
+                $ordenar";
+        }elseif ($usuario != null && $departamento == null){
+            $sql = "$select
+                AND tag.fk_sala = $sala
+                AND dep.fk_usuario = $usuario
+                $ordenar";
+        }elseif ($usuario != null && $departamento != null){
+            $sql = "$selectCompleta $ordenar";
+        }else{
+            $sql = "$select
+				AND tag.fk_sala = $sala
+                $ordenar";
+        }
+    }elseif ($departamento != null) {
+        if($usuario != null){
+            $sql = "$select
+                AND tag.fk_departamento = $departamento
+                AND dep.fk_usuario = $usuario
+                $ordenar";
+        }else{
+            $sql = "$select
+				AND tag.fk_departamento = $departamento
+                $ordenar";
+        }
+    }elseif ($usuario != null) {
+            $sql = "$select
+				AND tag.fk_usuario = $usuario
+                $ordenar";
+
+    }else{
+        $sql = "$tbAgendamento
+                WHERE dia_hora_inicio >= now()
+                $ordenar";}
 
     $rs = mysqli_query($conexao,$sql) or die("Erro ao buscar agendamentos no banco de dados" . mysqli_error($conexao));
 
@@ -112,9 +165,9 @@ var_dump($dia_hora);
             <td><?=$dados ["id_agendamento"]?></td>
             <td><?=$dados ["dia_hora_inicio"]?></td>
             <td><?=$dados ["dia_hora_fim"]?></td>
-            <td><?=$dados ['fk_sala']?></td>
-            <td><?=$dados ["fk_departamento"]?></td>
-            <td><?=$dados ["fk_usuario"]?></td>
+            <td><?=$dados ['nome_sala']?></td>
+            <td><?=$dados ["nome_departamento"]?></td>
+            <td><?=$dados ["nome_usuario"]?></td>
             <td><?=$dados ["recorrente"]?></td>
 
             <td><a class="btn btn-primary btn-sm" href="index.php?menuop=editarAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-pencil-square"></i></a></td>
@@ -124,6 +177,7 @@ var_dump($dia_hora);
     }
     ?>
     </tbody>
+</table>
 
 
 
