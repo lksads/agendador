@@ -80,16 +80,17 @@
                     ?>
                 </select>
             </div>
-
+        </div>
+        <div class="row g-3 align-items-center">
             <div class="form-check form-switch col-auto">
                 <input class="form-check-input" type="checkbox" role="switch" id="recorrente" name="recorrente">
                 <label class="form-check-label" for="recorrente">Recorrente</label>
             </div>
 
-<!--            <div class="col-auto">-->
-<!--                <label for="recorrente">Recorrente</label>-->
-<!--                <input type="number" name="recorrente" >-->
-<!--            </div>-->
+            <div class="col-auto">
+                <label class="form-check-label" for="num_frequencia">Repetir a cada: </label>
+                <input type="number" class="col-auto" name="nu_rep_freq"> dias.
+            </div>
 
         </div>
 
@@ -108,39 +109,45 @@
 </div>
 
 <?php
+    //Busca do dia Atual
+    $dt_criacao = date("Y-m-d H:i:s", strtotime('-3 hour'));
+
     if (isset( $_POST["dia_inicio"])) {
-        //juntando os dados para inserir no campo DATATIME
-        $dia_inicio = mysqli_real_escape_string($conexao, $_POST["dia_inicio"]);
-        $hora_inicio = mysqli_real_escape_string($conexao, $_POST["hora_inicio"]);
-        $dia_hora_inicio = $dia_inicio ." ". $hora_inicio;
+            //juntando os dados para inserir no campo DATATIME
+            $dia_inicio = mysqli_real_escape_string($conexao, $_POST["dia_inicio"]);
+            $hora_inicio = mysqli_real_escape_string($conexao, $_POST["hora_inicio"]);
+            $dia_hora_inicio = $dia_inicio ." ". $hora_inicio;
 
-        //juntando os dados para inserir no campo DATATIME
-        $dia_fim = mysqli_real_escape_string($conexao, $_POST["dia_fim"]);
-        $hora_fim = mysqli_real_escape_string($conexao, $_POST["hora_fim"]);
-        $dia_hora_fim = $dia_fim ." ". $hora_fim;
+            //juntando os dados para inserir no campo DATATIME
+            $dia_fim = mysqli_real_escape_string($conexao, $_POST["dia_fim"]);
+            $hora_fim = mysqli_real_escape_string($conexao, $_POST["hora_fim"]);
+            $dia_hora_fim = $dia_fim ." ". $hora_fim;
 
-        //$dia_hora_fim = mysqli_real_escape_string($conexao, $_POST["dia_hora_fim"]);
-        $fk_sala = mysqli_real_escape_string($conexao, $_POST["fk_sala"]);
-        $fk_departamento = mysqli_real_escape_string($conexao, $_POST["fk_departamento"]);
-        $fk_usuario = mysqli_real_escape_string($conexao, $_POST["fk_usuario"]);
+            //$dia_hora_fim = mysqli_real_escape_string($conexao, $_POST["dia_hora_fim"]);
+            $fk_sala = mysqli_real_escape_string($conexao, $_POST["fk_sala"]);
+            $fk_departamento = mysqli_real_escape_string($conexao, $_POST["fk_departamento"]);
+            $fk_usuario = mysqli_real_escape_string($conexao, $_POST["fk_usuario"]);
 
-        $recorrente = (isset($_POST["recorrente"]));
+            $recorrente = (isset($_POST["recorrente"]));
+            $num_rec_freq = mysqli_real_escape_string($conexao, $_POST["nu_rep_freq"]);
 
-        $observacao = mysqli_real_escape_string($conexao, $_POST["observacao"]);
+            $observacao = mysqli_real_escape_string($conexao, $_POST["observacao"]);
 
-        $sql = "INSERT INTO tb_agendamento (
-                               dia_hora_inicio, dia_hora_fim, fk_sala, fk_departamento, fk_usuario, recorrente, observacao)
-                               VALUES(
-                                      '{$dia_hora_inicio}',
-                                      '{$dia_hora_fim}',
-                                      '{$fk_sala}',
-                                      '{$fk_departamento}',
-                                      '{$fk_usuario}',
-                                      '{$recorrente}',
-                                      '{$observacao}'
-                               )";
-        mysqli_query($conexao, $sql) or die("Erro ao inserir o Agendamento no bando de dados. " . mysqli_error($conexao));
+            $sql = "INSERT INTO tb_agendamento (
+                                   dia_hora_inicio, dia_hora_fim, fk_sala, fk_departamento, fk_usuario, recorrente, observacao, dh_criacao, nu_rep_freq)
+                                   VALUES(
+                                          '{$dia_hora_inicio}',
+                                          '{$dia_hora_fim}',
+                                          '{$fk_sala}',
+                                          '{$fk_departamento}',
+                                          '{$fk_usuario}',
+                                          '{$recorrente}',
+                                          '{$observacao}',
+                                          '{$dt_criacao}',
+                                          '{$num_rec_freq}'
+                                   )";
+            mysqli_query($conexao, $sql) or die("Erro ao inserir o Agendamento no bando de dados. " . mysqli_error($conexao));
 
-        echo "O Agendamento foi inserida com sucesso";
+            echo "O Agendamento foi inserida com sucesso";
 
-    }
+        }

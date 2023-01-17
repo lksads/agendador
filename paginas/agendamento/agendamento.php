@@ -65,7 +65,6 @@
         </div>
     </form>
 
-
 </div>
 
 <br>
@@ -157,7 +156,6 @@
                 $ordenar";}
 
     $rs = mysqli_query($conexao,$sql) or die("Erro ao buscar agendamentos no banco de dados" . mysqli_error($conexao));
-
 
     while ($dados = mysqli_fetch_assoc($rs)){
         ?>
