@@ -130,6 +130,9 @@
 
             $recorrente = (isset($_POST["recorrente"]));
             $num_rec_freq = mysqli_real_escape_string($conexao, $_POST["nu_rep_freq"]);
+            $rs_num_freq =  date('Y-m-d H:i:s', strtotime('+'.$num_rec_freq.'days', strtotime(''.$dia_hora_inicio.'')));
+            $rs_num_freq_fim =  date('Y-m-d H:i:s', strtotime('+'.$num_rec_freq.'days', strtotime(''.$dia_hora_fim.'')));
+            var_dump($rs_num_freq);
 
             $observacao = mysqli_real_escape_string($conexao, $_POST["observacao"]);
 
@@ -146,7 +149,25 @@
                                           '{$dt_criacao}',
                                           '{$num_rec_freq}'
                                    )";
+
+            if($recorrente == 1){
+                $sql_rec = "INSERT INTO tb_agendamento (
+                                   dia_hora_inicio, dia_hora_fim, fk_sala, fk_departamento, fk_usuario, recorrente, observacao, dh_criacao, nu_rep_freq)
+                                   VALUES(
+                                          '{$rs_num_freq}',
+                                          '{$rs_num_freq_fim}',
+                                          '{$fk_sala}',
+                                          '{$fk_departamento}',
+                                          '{$fk_usuario}',
+                                          '{$recorrente}',
+                                          '{$observacao}',
+                                          '{$dt_criacao}',
+                                          '{$num_rec_freq}'
+                                   )";
+                mysqli_query($conexao, $sql_rec) or die("Erro ao inserir o Agendamento no bando de dados. " . mysqli_error($conexao));
+            }
             mysqli_query($conexao, $sql) or die("Erro ao inserir o Agendamento no bando de dados. " . mysqli_error($conexao));
+
 
             echo "O Agendamento foi inserida com sucesso";
 
