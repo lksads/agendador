@@ -16,6 +16,48 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `tb_agenda`
+--
+
+DROP TABLE IF EXISTS `tb_agenda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_agenda` (
+  `pk_agenda` int(11) NOT NULL AUTO_INCREMENT,
+  `dh_ini` datetime DEFAULT NULL,
+  `dh_fim` datetime DEFAULT NULL,
+  `dh_criacao` datetime DEFAULT current_timestamp(),
+  `dh_exclusao` datetime DEFAULT NULL,
+  `fk_sala` int(11) DEFAULT NULL,
+  `fk_setor` int(11) DEFAULT NULL,
+  `fk_usuario` int(11) DEFAULT NULL,
+  `fk_usuario_exc` int(11) DEFAULT NULL,
+  `fk_agendamento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`pk_agenda`),
+  KEY `fk_usuario_idx` (`fk_usuario`),
+  KEY `fk_sala_idx` (`fk_sala`),
+  KEY `fk_setor_idx` (`fk_setor`),
+  KEY `fk_usuario_exc_idx` (`fk_usuario_exc`),
+  KEY `fk_agendamento_agenda_idx` (`fk_agendamento`),
+  CONSTRAINT `fk_agendamento_agenda` FOREIGN KEY (`fk_agendamento`) REFERENCES `tb_agendamento` (`id_agendamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sala` FOREIGN KEY (`fk_sala`) REFERENCES `tb_sala` (`id_sala`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_setor` FOREIGN KEY (`fk_setor`) REFERENCES `tb_departamento` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario` FOREIGN KEY (`fk_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_exc` FOREIGN KEY (`fk_usuario_exc`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_agenda`
+--
+
+LOCK TABLES `tb_agenda` WRITE;
+/*!40000 ALTER TABLE `tb_agenda` DISABLE KEYS */;
+INSERT INTO `tb_agenda` VALUES (1,'2023-01-20 15:00:00','2023-01-20 15:16:00','2023-01-19 12:00:16',NULL,2,2,1,NULL,10),(2,'0000-00-00 00:00:00','0000-00-00 00:00:00','2023-01-19 12:28:24',NULL,1,3,1,NULL,11),(3,'0000-00-00 00:00:00','0000-00-00 00:00:00','2023-01-19 12:30:23',NULL,1,3,1,NULL,12),(4,'2023-01-30 12:00:00','2023-01-30 13:00:00','2023-01-19 12:38:18',NULL,4,4,4,NULL,17),(5,'2023-02-01 12:00:00','2023-02-01 13:00:00','2023-01-19 12:38:18',NULL,4,4,4,NULL,17),(6,'2023-01-24 12:00:00','2023-01-24 16:00:00','2023-01-19 12:39:54',NULL,5,5,1,NULL,18),(7,'2023-01-26 12:00:00','2023-01-26 16:00:00','2023-01-19 12:39:54',NULL,5,5,1,NULL,18),(8,'2023-01-28 12:00:00','2023-01-28 16:00:00','2023-01-19 12:39:54',NULL,5,5,1,NULL,18),(9,'2023-01-30 12:00:00','2023-01-30 16:00:00','2023-01-19 12:39:54',NULL,5,5,1,NULL,18),(10,'2023-02-01 12:00:00','2023-02-01 16:00:00','2023-01-19 12:39:54',NULL,5,5,1,NULL,18),(11,'2023-02-06 11:00:00','2023-02-06 12:00:00','2023-01-19 12:41:53',NULL,3,4,1,NULL,19),(12,'2023-02-08 11:00:00','2023-02-08 12:00:00','2023-01-19 12:41:53',NULL,3,4,1,NULL,19),(13,'2023-02-10 11:00:00','2023-02-10 12:00:00','2023-01-19 12:41:53',NULL,3,4,1,NULL,19);
+/*!40000 ALTER TABLE `tb_agenda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tb_agendamento`
 --
 
@@ -29,16 +71,29 @@ CREATE TABLE `tb_agendamento` (
   `fk_sala` int(11) DEFAULT NULL,
   `fk_departamento` int(11) DEFAULT NULL,
   `fk_usuario` int(11) DEFAULT NULL,
+  `fk_usuario_exc` int(11) DEFAULT NULL,
   `recorrente` tinyint(1) DEFAULT 0,
   `observacao` varchar(400) DEFAULT NULL,
+  `dh_criacao` datetime DEFAULT current_timestamp(),
+  `dh_termino` datetime DEFAULT NULL,
+  `dh_exclusao` datetime DEFAULT NULL,
+  `dh_rep_especifico` datetime DEFAULT NULL,
+  `nu_rep_freq` int(11) DEFAULT NULL,
+  `st_rep_dias_semanas` char(7) DEFAULT NULL,
+  `tp_rep_ocorrencia` char(1) DEFAULT NULL,
+  `tp_rep_ordinal` varchar(1) DEFAULT NULL,
+  `tp_ordinal_dia_semana` int(11) DEFAULT NULL,
+  `tp_ordinal_mes` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_agendamento`),
   KEY `fk_sala_idx` (`fk_sala`),
   KEY `fk_departamento_idx` (`fk_departamento`),
   KEY `fk_tb_agendamento_tb_usuario1_idx` (`fk_usuario`),
+  KEY `fk_usuario_exc_agendamento_idx` (`fk_usuario_exc`),
   CONSTRAINT `departamento` FOREIGN KEY (`fk_departamento`) REFERENCES `tb_departamento` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tb_agendamento_tb_usuario1` FOREIGN KEY (`fk_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_exc_agendamento` FOREIGN KEY (`fk_usuario_exc`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `sala` FOREIGN KEY (`fk_sala`) REFERENCES `tb_sala` (`id_sala`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +102,7 @@ CREATE TABLE `tb_agendamento` (
 
 LOCK TABLES `tb_agendamento` WRITE;
 /*!40000 ALTER TABLE `tb_agendamento` DISABLE KEYS */;
-INSERT INTO `tb_agendamento` VALUES (15,'2023-01-13 15:00:00','2023-01-13 17:00:00',2,4,1,1,''),(17,'2023-01-13 15:16:00','2023-01-13 18:00:00',2,2,1,1,'Mostrar essa área'),(18,'2023-01-13 15:00:00','2023-01-13 17:00:00',1,4,1,0,'teste'),(19,'2023-01-13 11:00:00','2023-01-13 12:00:00',1,3,1,0,'123'),(21,'2023-01-13 12:00:00','2023-01-13 12:00:00',1,2,1,1,'123'),(22,'2023-01-12 11:00:00','2023-01-12 11:00:00',1,3,1,1,'10101'),(23,'2023-01-11 13:00:00','2023-01-11 00:00:00',1,3,1,1,'');
+INSERT INTO `tb_agendamento` VALUES (9,'2023-01-20 13:30:00','2023-01-20 14:20:00',1,2,1,NULL,1,'123','2023-01-19 11:58:34',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(10,'2023-01-20 15:00:00','2023-01-20 15:16:00',2,2,1,NULL,1,'teste1','2023-01-19 12:00:16',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(11,'2023-01-20 15:16:00','2023-01-20 16:15:00',1,3,1,NULL,1,'teste','2023-01-19 12:28:24',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(12,'2023-01-20 15:16:00','2023-01-20 16:15:00',1,3,1,NULL,1,'teste','2023-01-19 12:30:23',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(13,'2023-01-20 15:16:00','2023-01-20 16:15:00',1,3,1,NULL,1,'teste','2023-01-19 12:31:14',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(14,'2023-01-20 15:16:00','2023-01-20 16:15:00',1,3,1,NULL,1,'teste','2023-01-19 12:33:35',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(15,'2023-01-20 13:00:00','2023-01-20 16:00:00',2,2,1,NULL,1,'teste2','2023-01-19 12:34:22',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(16,'2023-01-23 10:00:00','2023-01-23 11:00:00',3,2,1,NULL,1,'teste 3','2023-01-19 12:36:32',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(17,'2023-01-30 12:00:00','2023-01-30 13:00:00',4,4,4,NULL,1,'teste 4','2023-01-19 12:38:18',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(18,'2023-01-24 12:00:00','2023-01-24 16:00:00',5,5,1,NULL,1,'teste teste','2023-01-19 12:39:54',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL),(19,'2023-02-06 11:00:00','2023-02-06 12:00:00',3,4,1,NULL,1,'123','2023-01-19 12:41:53',NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tb_agendamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +126,7 @@ CREATE TABLE `tb_departamento` (
 
 LOCK TABLES `tb_departamento` WRITE;
 /*!40000 ALTER TABLE `tb_departamento` DISABLE KEYS */;
-INSERT INTO `tb_departamento` VALUES (2,'daf'),(3,'dae'),(4,'dao'),(5,'DIJ'),(10,'lucas'),(11,'Marco');
+INSERT INTO `tb_departamento` VALUES (2,'DAF'),(3,'DAE'),(4,'DAO'),(5,'DIJ'),(10,'DPS'),(11,'DAC');
 /*!40000 ALTER TABLE `tb_departamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-13  8:24:25
+-- Dump completed on 2023-01-19 16:51:37
