@@ -126,6 +126,7 @@
 
             $recorrente = (isset($_POST["recorrente"]));
             $dh_termino = (isset($_POST["dh_termino"])?$_POST["dh_termino"]:NULL);
+            $dh_termino = $dh_termino. $hora_fim;
 
             $num_rec_freq = mysqli_real_escape_string($conexao, $_POST["nu_rep_freq"]);
             $observacao = mysqli_real_escape_string($conexao, $_POST["observacao"]);
@@ -172,35 +173,7 @@
                     $dia_hora_fim->modify('+'.$num_rec_freq.' day');
                     var_dump($num_rec_freq);
                 }
-
-
-
-
-
-//                $rs_num_freq_inicio =  date('Y-m-d H:i:s', strtotime('+'.$num_rec_freq.'days', strtotime(''.$dia_hora_inicio.'')));
-//                $rs_num_freq_fim =  date('Y-m-d H:i:s', strtotime('+'.$num_rec_freq.'days', strtotime(''.$dia_hora_fim.'')));
-//
-//                while ($dh_termino <= $rs_num_freq_inicio ){
-//
-//
-//                    $sql_rec = "INSERT INTO tb_agendamento (
-//                                       dia_hora_inicio, dia_hora_fim, fk_sala, fk_departamento, fk_usuario, recorrente, observacao, dh_criacao, nu_rep_freq)
-//                                       VALUES(
-//                                              '{$rs_num_freq_inicio}',
-//                                              '{$rs_num_freq_fim}',
-//                                              '{$fk_sala}',
-//                                              '{$fk_departamento}',
-//                                              '{$fk_usuario}',
-//                                              '{$recorrente}',
-//                                              '{$observacao}',
-//                                              '{$dt_criacao}',
-//                                              '{$num_rec_freq}'
-//                                       )";
-//                    mysqli_query($conexao, $sql_rec) or die("Erro ao inserir o Agendamento no bando de dados. " . mysqli_error($conexao));
-//                }
             }
-
-
 
             echo "O Agendamento foi inserida com sucesso";
 

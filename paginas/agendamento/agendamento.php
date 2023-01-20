@@ -78,6 +78,7 @@
         <th> Departamento</th>
         <th> Usuário</th>
         <th> Recorrente</th>
+        <th> Dia da Semana</th>
         <th> Editar</th>
         <th> Excluir</th>
     </tr>
@@ -93,6 +94,12 @@
     $usuario = (isset($_POST["fk_usuario"]))?$_POST["fk_usuario"] : "";
 
     $ordenar = "ORDER BY dia_hora_inicio ASC";
+
+    $diaNome = "SET lc_time_names = 'pt_BR';
+                    SELECT DAYNAME( dh_ini) as nome_dia
+                    FROM tb_agenda
+                    WHERE dh_ini is not null
+                    ";
     $tbAgendamento = "SELECT * FROM tb_agendamento tag
                 INNER JOIN tb_sala sala ON (sala.id_sala = tag.fk_sala) 
                 INNER JOIN tb_departamento dep ON (dep.id_departamento = tag.fk_departamento)
@@ -155,24 +162,32 @@
                 WHERE dia_hora_inicio >= now()
                 $ordenar";}
 
+
+
     $rs = mysqli_query($conexao,$sql) or die("Erro ao buscar agendamentos no banco de dados" . mysqli_error($conexao));
+
+
+
 
     while ($dados = mysqli_fetch_assoc($rs)){
         ?>
         <tr>
-            <td><?=$dados ["id_agendamento"]?></td>
-            <td><?=$dados ["dia_hora_inicio"]?></td>
+            <td><?=$dados ["id_agendamento"];?></td>
+            <td><?=$dados ["dia_hora_inicio"];?></td>
             <td><?=$dados ["dia_hora_fim"]?></td>
             <td><?=$dados ['nome_sala']?></td>
             <td><?=$dados ["nome_departamento"]?></td>
             <td><?=$dados ["nome_usuario"]?></td>
             <td><?=$dados ["recorrente"]?></td>
+            <td><?=$dados ["nome_dia"]?></td>
+
 
             <td><a class="btn btn-primary btn-sm" href="index.php?menuop=editarAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-pencil-square"></i></a></td>
             <td><a class="btn btn-danger btn-sm" href="index.php?menuop=excluirAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-trash3"></i></a></td>
         </tr>
         <?php
     }
+
     ?>
     </tbody>
 </table>
