@@ -10,15 +10,14 @@ $hora_inicio = mysqli_real_escape_string($conexao, $_POST["hora_inicio"]);
 $dia_hora_inicio = $dia_inicio ." ". $hora_inicio;
 //-----------------------------------------------------------------------------------------
 //juntando os dados para inserir no campo DATATIME
-$dia_fim = mysqli_real_escape_string($conexao, $_POST["dia_fim"]);
 $hora_fim = mysqli_real_escape_string($conexao, $_POST["hora_fim"]);
-$dia_hora_fim = $dia_fim ." ". $hora_fim;
+$dia_hora_fim = $dia_inicio ." ". $hora_fim;
 //-----------------------------------------------------------------------------------------
 $fk_sala = mysqli_real_escape_string($conexao, $_POST["fk_sala"]);
 $fk_departamento = mysqli_real_escape_string($conexao, $_POST["fk_departamento"]);
 $fk_usuario = mysqli_real_escape_string($conexao, $_POST["fk_usuario"]);
 
-$recorrente = isset($_POST["recorrente"]);
+
 $observacao = mysqli_real_escape_string($conexao, $_POST["observacao"]);
 
 $sql = "UPDATE tb_agendamento SET
@@ -27,7 +26,6 @@ $sql = "UPDATE tb_agendamento SET
                          fk_sala = '{$fk_sala}',
                          fk_departamento = '{$fk_departamento}',
                          fk_usuario = '{$fk_usuario}',
-                         recorrente = '{$recorrente}',
                          observacao = '{$observacao}'
                          
                             WHERE id_agendamento = '{$id_agendamento}'

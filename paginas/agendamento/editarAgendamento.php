@@ -38,15 +38,6 @@ $hora_fim = str_split(trim($dia_fim[1]),5)[0];
             <div class="col-auto">
                 <input type="time" class="form-control" name="hora_inicio" value="<?=$hora_inicio?>">
             </div>
-        </div>
-
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label for="diaFim">Dia Fim: </label>
-            </div>
-            <div class="col-auto">
-                <input type="date" class="form-control" name="dia_fim" value="<?=$dia_fim[0]?>">
-            </div>
             <div class="col-auto">
                 <label for="horaFim">Hora Fim: </label>
             </div>
@@ -54,6 +45,7 @@ $hora_fim = str_split(trim($dia_fim[1]),5)[0];
                 <input type="time" class="form-control" name="hora_fim" value="<?=$hora_fim?>">
             </div>
         </div>
+
         <div class="row g-3 align-items-center">
             <div class="col-auto">
                 <label for="sala">Sala: </label>
@@ -82,8 +74,6 @@ $hora_fim = str_split(trim($dia_fim[1]),5)[0];
                     ?>
                 </select>
             </div>
-        </div>
-        <div class="row g-3 align-items-center">
             <div class="col-auto">
                 <label for="usuario">Usuário: </label>
                 <select name="fk_usuario">
@@ -97,13 +87,14 @@ $hora_fim = str_split(trim($dia_fim[1]),5)[0];
                     ?>
                 </select>
             </div>
-
-            <div class="form-check form-switch col-auto">
-                <input class="form-check-input" type="checkbox" role="switch" id="recorrente" name="recorrente" <?=($dados["recorrente"]?'checked="checked"':'') ?>>
-                <label class="form-check-label" for="recorrente">Recorrente</label>
-            </div>
-
         </div>
+<!--        <div class="row g-3 align-items-center">-->
+<!--            <div class="form-check form-switch col-auto">-->
+<!--                <input class="form-check-input" type="checkbox" role="switch" id="recorrente" name="recorrente" --><?php //=($dados["recorrente"]?'checked="checked"':'') ?>
+<!--                <label class="form-check-label" for="recorrente">Recorrente</label>-->
+<!--            </div>-->
+<!---->
+<!--        </div>-->
 
         <div class="row g-3 align-items-center">
             <label class="col-auto" for="observacao">Observação:  </label>

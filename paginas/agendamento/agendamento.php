@@ -73,12 +73,12 @@
     <tr class="bg-info">
         <th> ID</th>
         <th> Horário Inicio</th>
+        <th> Dia da Semana</th>
         <th> Horário Fim</th>
         <th> Sala</th>
         <th> Departamento</th>
         <th> Usuário</th>
         <th> Recorrente</th>
-        <th> Dia da Semana</th>
         <th> Editar</th>
         <th> Excluir</th>
     </tr>
@@ -86,6 +86,8 @@
 
     <tbody>
     <?php
+    setlocale(LC_ALL, "pt_BR", 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
     $dia_inicio = (isset($conexao, $_POST["data_inicio"]))? $_POST["data_inicio"] : "" ;
     $dia_fim = (isset($conexao, $_POST["data_fim"]))? $_POST["data_fim"]: "";
 
@@ -95,15 +97,17 @@
 
     $ordenar = "ORDER BY dia_hora_inicio ASC";
 
-    $diaNome = "SET lc_time_names = 'pt_BR';
-                    SELECT DAYNAME( dh_ini) as nome_dia
-                    FROM tb_agenda
-                    WHERE dh_ini is not null
-                    ";
     $tbAgendamento = "SELECT * FROM tb_agendamento tag
                 INNER JOIN tb_sala sala ON (sala.id_sala = tag.fk_sala) 
                 INNER JOIN tb_departamento dep ON (dep.id_departamento = tag.fk_departamento)
                 INNER JOIN tb_usuario usu ON (usu.id_usuario = tag.fk_usuario)";
+
+    $tbAgenda = "SELECT * FROM tb_agenda tb
+			INNER JOIN tb_agendamento agen ON (agen.id_agendamento = tb.fk_agendamento)
+			INNER JOIN tb_sala sala ON (sala.id_sala = tb.fk_sala) 
+			INNER JOIN tb_departamento dep ON (dep.id_departamento = tb.fk_setor)
+			INNER JOIN tb_usuario usu ON (usu.id_usuario = tb.fk_usuario)
+                ";
 
     if($dia_fim == ""){
         $inicio = $dia_inicio . " 00:00:00";
@@ -158,29 +162,27 @@
                 $ordenar";
 
     }else{
-        $sql = "$tbAgendamento
-                WHERE dia_hora_inicio >= now()
-                $ordenar";}
-
-
+//        $sql = "$tbAgendamento
+//              WHERE dia_hora_inicio >= now()
+//              $ordenar";}
+            $sql = "$tbAgenda
+                WHERE tb.fk_agendamento = agen.id_agendamento
+                AND dh_ini >= now()";
+    }
 
     $rs = mysqli_query($conexao,$sql) or die("Erro ao buscar agendamentos no banco de dados" . mysqli_error($conexao));
-
-
-
 
     while ($dados = mysqli_fetch_assoc($rs)){
         ?>
         <tr>
             <td><?=$dados ["id_agendamento"];?></td>
             <td><?=$dados ["dia_hora_inicio"];?></td>
+            <td><?=strftime("%A", strtotime($dados["dia_hora_inicio"]))?></td>
             <td><?=$dados ["dia_hora_fim"]?></td>
             <td><?=$dados ['nome_sala']?></td>
             <td><?=$dados ["nome_departamento"]?></td>
             <td><?=$dados ["nome_usuario"]?></td>
             <td><?=$dados ["recorrente"]?></td>
-            <td><?=$dados ["nome_dia"]?></td>
-
 
             <td><a class="btn btn-primary btn-sm" href="index.php?menuop=editarAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-pencil-square"></i></a></td>
             <td><a class="btn btn-danger btn-sm" href="index.php?menuop=excluirAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-trash3"></i></a></td>
@@ -191,6 +193,3 @@
     ?>
     </tbody>
 </table>
-
-
-
