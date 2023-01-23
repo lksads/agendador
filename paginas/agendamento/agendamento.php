@@ -78,7 +78,6 @@
         <th> Sala</th>
         <th> Departamento</th>
         <th> Usuário</th>
-        <th> Recorrente</th>
         <th> Editar</th>
         <th> Excluir</th>
     </tr>
@@ -175,14 +174,13 @@
     while ($dados = mysqli_fetch_assoc($rs)){
         ?>
         <tr>
-            <td><?=$dados ["id_agendamento"];?></td>
-            <td><?=$dados ["dia_hora_inicio"];?></td>
-            <td><?=strftime("%A", strtotime($dados["dia_hora_inicio"]))?></td>
+            <td><?=$dados ["fk_agendamento"];?></td>
+            <td><?=$dados ["dh_fim"];?></td>
+            <td><?=utf8_encode(strftime("%A", strtotime($dados["dh_ini"])))?></td>
             <td><?=$dados ["dia_hora_fim"]?></td>
             <td><?=$dados ['nome_sala']?></td>
             <td><?=$dados ["nome_departamento"]?></td>
             <td><?=$dados ["nome_usuario"]?></td>
-            <td><?=$dados ["recorrente"]?></td>
 
             <td><a class="btn btn-primary btn-sm" href="index.php?menuop=editarAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-pencil-square"></i></a></td>
             <td><a class="btn btn-danger btn-sm" href="index.php?menuop=excluirAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-trash3"></i></a></td>

@@ -3,6 +3,8 @@ $id_agendamento = $_GET["id_agendamento"];
 
 $sql = "SELECT * FROM tb_agendamento WHERE id_agendamento = {$id_agendamento}";
 $rs = mysqli_query($conexao,$sql) or die ("Erro ao trazer os dados do bando" . mysqli_error($conexao));
+
+
 $dados = mysqli_fetch_assoc($rs);
 //Buscando a data completa do banco e separando os campos de dia e hora com str_sprint
 $dia_inicio = str_split($dados["dia_hora_inicio"],10);
