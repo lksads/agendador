@@ -94,18 +94,18 @@
     $departamento = (isset($_POST["fk_departamento"]))?$_POST["fk_departamento"] : "";
     $usuario = (isset($_POST["fk_usuario"]))?$_POST["fk_usuario"] : "";
 
-    $ordenar = "ORDER BY dia_hora_inicio ASC";
+    $ordenar = "ORDER BY dh_ini ASC";
 
-    $tbAgendamento = "SELECT * FROM tb_agendamento tag
-                INNER JOIN tb_sala sala ON (sala.id_sala = tag.fk_sala) 
-                INNER JOIN tb_departamento dep ON (dep.id_departamento = tag.fk_departamento)
-                INNER JOIN tb_usuario usu ON (usu.id_usuario = tag.fk_usuario)";
+//    $tbAgendamento = "SELECT * FROM tb_agendamento tag
+//                INNER JOIN tb_sala sala ON (sala.id_sala = tag.fk_sala)
+//                INNER JOIN tb_departamento dep ON (dep.id_departamento = tag.fk_departamento)
+//                INNER JOIN tb_usuario usu ON (usu.id_usuario = tag.fk_usuario)";
 
-    $tbAgenda = "SELECT * FROM tb_agenda tb
-			INNER JOIN tb_agendamento agen ON (agen.id_agendamento = tb.fk_agendamento)
-			INNER JOIN tb_sala sala ON (sala.id_sala = tb.fk_sala) 
-			INNER JOIN tb_departamento dep ON (dep.id_departamento = tb.fk_setor)
-			INNER JOIN tb_usuario usu ON (usu.id_usuario = tb.fk_usuario)
+    $tbAgendamento = "SELECT * FROM tb_agenda tag
+			INNER JOIN tb_agendamento agen ON (agen.id_agendamento = tag.fk_agendamento)
+			INNER JOIN tb_sala sala ON (sala.id_sala = tag.fk_sala) 
+			INNER JOIN tb_departamento dep ON (dep.id_departamento = tag.fk_departamento)
+			INNER JOIN tb_usuario usu ON (usu.id_usuario = tag.fk_usuario)
                 ";
 
     if($dia_fim == ""){
@@ -117,8 +117,8 @@
         $inicio = $dia_inicio . " 00:00:00";
         $fim = $dia_fim . " 23:59:59";
         $select = "$tbAgendamento
-                WHERE tag.dia_hora_inicio >= '$inicio'
-				AND tag.dia_hora_fim <= '$fim'";
+                WHERE tag.dh_ini >= '$inicio'
+				AND tag.dh_fim <= '$fim'";
     }
 
     $selectCompleta = "$select
@@ -164,9 +164,11 @@
 //        $sql = "$tbAgendamento
 //              WHERE dia_hora_inicio >= now()
 //              $ordenar";}
-            $sql = "$tbAgenda
-                WHERE tb.fk_agendamento = agen.id_agendamento
-                AND dh_ini >= now()";
+            $sql = "$tbAgendamento
+                WHERE tag.fk_agendamento = agen.id_agendamento
+                AND status <> 0
+                AND dh_ini >= now()
+                $ordenar";
     }
 
     $rs = mysqli_query($conexao,$sql) or die("Erro ao buscar agendamentos no banco de dados" . mysqli_error($conexao));
@@ -174,16 +176,18 @@
     while ($dados = mysqli_fetch_assoc($rs)){
         ?>
         <tr>
-            <td><?=$dados ["fk_agendamento"];?></td>
-            <td><?=$dados ["dh_fim"];?></td>
+            <td><?=$dados ["pk_agenda"];?></td>
+<!--            <td>--><?php //=$dados ["dh_ini"];?><!--</td>-->
+            <td><?= date("d/m/Y H:i", strtotime($dados["dh_ini"])); ?></td>
             <td><?=utf8_encode(strftime("%A", strtotime($dados["dh_ini"])))?></td>
-            <td><?=$dados ["dia_hora_fim"]?></td>
+<!--            <td>--><?php //=$dados ["dh_fim"]?><!--</td>-->
+            <td><?= date("d/m/Y H:i", strtotime($dados["dh_fim"])); ?></td>
             <td><?=$dados ['nome_sala']?></td>
             <td><?=$dados ["nome_departamento"]?></td>
             <td><?=$dados ["nome_usuario"]?></td>
 
             <td><a class="btn btn-primary btn-sm" href="index.php?menuop=editarAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-pencil-square"></i></a></td>
-            <td><a class="btn btn-danger btn-sm" href="index.php?menuop=excluirAgendamento&id_agendamento=<?=$dados["id_agendamento"] ?>"><i class="bi bi-trash3"></i></a></td>
+            <td><a class="btn btn-danger btn-sm" href="index.php?menuop=excluirAgendamento&pk_agenda=<?=$dados["pk_agenda"] ?>&id_usuario=<?=$dados["id_usuario"] ?>"><i class="bi bi-trash3"></i></a></td>
         </tr>
         <?php
     }

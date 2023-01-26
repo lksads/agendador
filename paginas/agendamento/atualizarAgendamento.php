@@ -33,6 +33,18 @@ $sql = "UPDATE tb_agendamento SET
 
 mysqli_query($conexao, $sql) or die("Erro ao atualizar o Agendamento no banco de dados" . mysqli_error($conexao));
 
+$sql = "UPDATE tb_agenda SET
+                        dh_ini = ,
+                        fk_sala = ,
+                        fk_departamento = ,
+                        fk_usuario = ,
+                        
+                         
+                            
+                         ";
+
+mysqli_query($conexao, $sql) or die("Erro ao atualizar o Agendamento no banco de dados" . mysqli_error($conexao));
+
 echo "O Agendamento foi atualizada com sucesso";
 ?>
 <div>
